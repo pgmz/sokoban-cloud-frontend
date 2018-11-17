@@ -14,7 +14,7 @@ $(function(){
     Http.send();
 
     Http.onreadystatechange=(e)=>{
-        structureOfBoard = JSON.parse(Http.responseText);
+        structureOfBoard = JSON.parse(Http.responseText).Board;
         loop();
     }
 
@@ -23,26 +23,50 @@ $(function(){
 function preload(){
     blockSprite = getBlockSprites();
     playerSprite = getPlayerSprites();
+    environmentSprite = getEnvironmentSprites();
+    crateSprite = getCrateSprites();
+    groundSprite = getGroundSprites();
 }
 
 function setup() {
-    var cnv = createCanvas(640, 448);
+    var cnv = createCanvas(768, 576);
     cnv.parent('canvasContainer');
-    frameRate(8);
+    frameRate(12);
 }
 
 function draw() {
     background('#C0C0C0');
     if(structureOfBoard != null){
+
+        for(var posX = 0; posX < 12; posX++){
+            for(var posY = 0; posY < 9; posY++){
+                if(posX == 0 || posX == 11 || posY == 0 || posY == 8){
+                    image(blockSprite[0],
+                        posX * 64,
+                        posY * 64);
+                } else {
+                    image(groundSprite[0],
+                        posX * 64,
+                        posY * 64);
+                }
+            }
+        }
+
+        structureOfBoard.Marker.forEach(element => {
+            image(environmentSprite[element.Sprite],
+                (element.PositionX+1) * 64,
+                (element.PositionY+1) * 64);
+        });
+
         structureOfBoard.Boxes.forEach(element => {
             image(blockSprite[element.Sprite],
-                element.PositionX * 64,
-                element.PositionY * 64);
+                (element.PositionX+1) * 64,
+                (element.PositionY+1) * 64);
         });
         
         image(playerSprite[structureOfBoard.Player.Sprite][inx],
-            structureOfBoard.Player.PositionX * 64, 
-            structureOfBoard.Player.PositionY * 64);
+            (structureOfBoard.Player.PositionX+1) * 64, 
+            (structureOfBoard.Player.PositionY+1) * 64);
         inx = (inx==2)?(0):(inx+1);
     }
 }
@@ -65,8 +89,11 @@ window.onkeyup = function(e) {
         Http.send();
     
         Http.onreadystatechange=(e)=>{
-            console.log(Http.responseText);
-            structureOfBoard = JSON.parse(Http.responseText);
+            structureOfBoard = JSON.parse(Http.responseText).Board;
+            Game = JSON.parse(Http.responseText).Game;
+            if(Game){
+                $(document.getElementById('mainTitle')).text("Ah perro, ya ganaste");
+            }
         }
     }
 }
