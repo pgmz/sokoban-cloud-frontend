@@ -4,15 +4,18 @@ const lambdaBoardUrl = "https://vls7dvxl8f.execute-api.us-east-1.amazonaws.com/l
 var blockSprite;
 var playerSprite;
 var structureOfBoard = {};
+var inx = 0;
 
 $(function(){
+
+    noLoop();
 
     Http.open("GET", lambdaBoardUrl + "/start");
     Http.send();
 
     Http.onreadystatechange=(e)=>{
         structureOfBoard = JSON.parse(Http.responseText);
-        redraw();
+        loop();
     }
 
 });
@@ -25,7 +28,7 @@ function preload(){
 function setup() {
     var cnv = createCanvas(640, 448);
     cnv.parent('canvasContainer');
-
+    frameRate(8);
 }
 
 function draw() {
@@ -37,11 +40,11 @@ function draw() {
                 element.PositionY * 64);
         });
         
-        image(playerSprite[structureOfBoard.Player.Sprite][0],
+        image(playerSprite[structureOfBoard.Player.Sprite][inx],
             structureOfBoard.Player.PositionX * 64, 
             structureOfBoard.Player.PositionY * 64);
+        inx = (inx==2)?(0):(inx+1);
     }
-    noLoop();
 }
 
 window.onkeyup = function(e) {
@@ -64,7 +67,6 @@ window.onkeyup = function(e) {
         Http.onreadystatechange=(e)=>{
             console.log(Http.responseText);
             structureOfBoard = JSON.parse(Http.responseText);
-            redraw();
         }
     }
 }
