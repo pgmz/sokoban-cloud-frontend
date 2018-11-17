@@ -57,8 +57,6 @@ window.onkeyup = function(e) {
         action = "Left";
     }
     
-    console.log(lambdaGameUrl + "/move/" + action);
-
     if(action != null){
         Http.open("GET", lambdaGameUrl + "/move/" + action);
         Http.send();
