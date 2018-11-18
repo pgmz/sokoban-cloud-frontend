@@ -6,7 +6,23 @@ var playerSprite;
 var structureOfBoard = {};
 var inx = 0;
 
+var Sokoban = window.Sokoban || {};
+Sokoban.map = Sokoban.map || {};
+var authToken;
+
 $(function(){
+
+    Sokoban.authToken.then(function setAuthToken(token) {
+        if (token) {
+            authToken = token;
+        } else {
+            window.location.href = '/signin.html';
+        }
+    }).catch(function handleTokenError(error) {
+        alert(error);
+        window.location.href = '/signin.html';
+    });
+
 
     noLoop();
 
@@ -86,9 +102,11 @@ window.onkeyup = function(e) {
     
     if(action != null){
         Http.open("GET", lambdaGameUrl + "/move/" + action);
+        Http.setRequestHeader('Authorization',authToken);
         Http.send();
     
         Http.onreadystatechange=(e)=>{
+            console.log(Http.responseText);
             structureOfBoard = JSON.parse(Http.responseText).Board;
             Game = JSON.parse(Http.responseText).Game;
             if(Game){
