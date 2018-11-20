@@ -6,23 +6,11 @@
 </head>
 <body>
 
-<h1 align="center">Sokoban</h1>
-<table>
-    <tr>
-        <td width="20%">
-            <p><h4>Level 1</h4>
-                <h4 id="movements-title">Movements</h4>
-                <h4 id="points-title">Points</h4>
-                <button onclick="restartGame()">Restart</button>
-                <br>
-                <button>Options</button>
-            </p>
-        </td>
-        <td width="80%">
-            <div id="canvasContainer" align="center"></div>
-        </td>
-    </tr>
-</table>
+<h1 id="mainTitle">Game menu</h1>
+
+<button id="continue_button" onclick="continueGame()" style="display:none">Continue with last game</button>
+<button onclick="createGame('level1')">Go to Level 1</button>
+<button onclick="createGame('level2')">Go to Level 2</button>
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -33,6 +21,5 @@
 <script src="js/vendor/amazon-cognito-identity.min.js"></script>
 <script src="js/config.js"></script>
 <script src="js/cognito-auth.js"></script>
-<script src="js/sprites.js"></script> 
-<script src="js/game.js"></script> 
+<script src="js/gameMenu.js"></script> 
 </html> 

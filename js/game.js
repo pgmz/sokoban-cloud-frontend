@@ -1,10 +1,11 @@
 const Http = new XMLHttpRequest();
-const lambdaGameUrl = 'https://lq8bqagr7d.execute-api.us-east-1.amazonaws.com/latest';
-const lambdaBoardUrl = "https://vls7dvxl8f.execute-api.us-east-1.amazonaws.com/latest";
 var blockSprite;
 var playerSprite;
 var structureOfBoard = {};
 var inx = 0;
+var offsetX = 0;
+var offsetY = 0;
+var level;
 
 var Sokoban = window.Sokoban || {};
 Sokoban.map = Sokoban.map || {};
@@ -12,28 +13,33 @@ var authToken;
 
 $(function(){
 
+    noLoop();
+
     Sokoban.authToken.then(function setAuthToken(token) {
         if (token) {
             authToken = token;
         } else {
             window.location.href = '/signin.html';
         }
+
+        Http.open("GET", window._config.api.invokeBoardUrl + "/start");
+        Http.setRequestHeader('Authorization',authToken);
+        Http.send();
+    
+        Http.onreadystatechange=(e)=>{
+            structureOfBoard = JSON.parse(Http.responseText).Board;
+            offsetX = Math.floor(15 - structureOfBoard.Size[0])/2;
+            offsetY = Math.floor(9 - structureOfBoard.Size[1])/2;
+            level = structureOfBoard.Name;
+            $(document.getElementById('movements-title')).text("Movements: " + JSON.parse(Http.responseText).Movements);
+            $(document.getElementById('points-title')).text("Points: " + JSON.parse(Http.responseText).Points);
+            loop();
+        }
+
     }).catch(function handleTokenError(error) {
         alert(error);
         window.location.href = '/signin.html';
     });
-
-
-    noLoop();
-
-    Http.open("GET", lambdaBoardUrl + "/start");
-    Http.send();
-
-    Http.onreadystatechange=(e)=>{
-        structureOfBoard = JSON.parse(Http.responseText).Board;
-        loop();
-    }
-
 });
 
 function preload(){
@@ -45,44 +51,37 @@ function preload(){
 }
 
 function setup() {
-    var cnv = createCanvas(768, 576);
+    //this is equal to 15*9
+    var cnv = createCanvas(960, 576);
     cnv.parent('canvasContainer');
     frameRate(12);
 }
 
 function draw() {
-    background('#C0C0C0');
+    background('#000000');
     if(structureOfBoard != null){
 
-        for(var posX = 0; posX < 12; posX++){
-            for(var posY = 0; posY < 9; posY++){
-                if(posX == 0 || posX == 11 || posY == 0 || posY == 8){
-                    image(blockSprite[0],
-                        posX * 64,
-                        posY * 64);
-                } else {
-                    image(groundSprite[0],
-                        posX * 64,
-                        posY * 64);
-                }
-            }
-        }
+        structureOfBoard.Limits.forEach(element => {
+            image(blockSprite[element.Sprite],
+                (offsetX + element.PositionX) * 64,
+                (offsetY + element.PositionY) * 64);
+        });
 
         structureOfBoard.Marker.forEach(element => {
             image(environmentSprite[element.Sprite],
-                (element.PositionX+1) * 64,
-                (element.PositionY+1) * 64);
+                (offsetX + element.PositionX) * 64,
+                (offsetY + element.PositionY) * 64);
         });
 
         structureOfBoard.Boxes.forEach(element => {
             image(blockSprite[element.Sprite],
-                (element.PositionX+1) * 64,
-                (element.PositionY+1) * 64);
+                (offsetX + element.PositionX) * 64,
+                (offsetY + element.PositionY) * 64);
         });
         
         image(playerSprite[structureOfBoard.Player.Sprite][inx],
-            (structureOfBoard.Player.PositionX+1) * 64, 
-            (structureOfBoard.Player.PositionY+1) * 64);
+            (offsetX + structureOfBoard.Player.PositionX) * 64, 
+            (offsetY + structureOfBoard.Player.PositionY) * 64);
         inx = (inx==2)?(0):(inx+1);
     }
 }
@@ -101,17 +100,42 @@ window.onkeyup = function(e) {
     }
     
     if(action != null){
-        Http.open("GET", lambdaGameUrl + "/move/" + action);
+        Http.open("GET", window._config.api.invokeGameUrl + "/move/" + action);
         Http.setRequestHeader('Authorization',authToken);
         Http.send();
     
         Http.onreadystatechange=(e)=>{
-            console.log(Http.responseText);
             structureOfBoard = JSON.parse(Http.responseText).Board;
             Game = JSON.parse(Http.responseText).Game;
             if(Game){
                 $(document.getElementById('mainTitle')).text("Ah perro, ya ganaste");
+            } else {
+                $(document.getElementById('mainTitle')).text("Ah perro");
             }
+            $(document.getElementById('movements-title')).text("Movements: " + JSON.parse(Http.responseText).Movements);
+            $(document.getElementById('points-title')).text("Points: " + JSON.parse(Http.responseText).Points);
         }
     }
+}
+
+function restartGame(){
+    Sokoban.authToken.then(function setAuthToken(token) {
+        if (token) {
+            authToken = token;
+        } else {
+            window.location.href = 'signin.html';
+        }
+
+        Http.open("GET", window._config.api.invokeBoardUrl + "/start/new/" + level);
+        Http.setRequestHeader('Authorization',authToken);
+        Http.send();
+    
+        Http.onreadystatechange=(e)=>{
+            window.location.href = "game.html";
+        }
+
+    }).catch(function handleTokenError(error) {
+        alert(error);
+        window.location.href = 'signin.html';
+    });
 }

@@ -3,7 +3,7 @@
 var Sokoban = window.Sokoban || {};
 
 (function scopeWrapper($) {
-    var signinUrl = '/signin.html';
+    var signinUrl = 'index.html';
 
     var poolData = {
         UserPoolId: _config.cognito.userPoolId,
@@ -117,7 +117,7 @@ var Sokoban = window.Sokoban || {};
         signin(email, password,
             function signinSuccess() {
                 console.log('Successfully Logged In');
-                window.location.href = 'game.html';
+                window.location.href = 'gameMenu.html';
             },
             function signinError(err) {
                 alert(err);
