@@ -12,12 +12,13 @@
 <div class="container">
     <div class="row">
             <div class="col-md-2">
-                <p><h4>Level 1</h4>
-                    <h4 id="movements-title">Movements</h4>
-                    <h4 id="points-title">Points</h4>
-                    <button type="button" class="btn btn-warning" onclick="restartGame()">Restart</button>
+                <p><h5 id="level-title">Level n</h5>
+                    <h5 id="movements-title">Movements</h5>
+                    <button id="restart-button" type="button" class="btn btn-warning" onclick="restartGame()">Restart</button>
                     <br>
-                    <button type="button" class="btn btn-info">Options</button>
+                    <button id="options-button" type="button" class="btn btn-info">Options</button>
+                    <br>
+                    <button id="menu-button" onclick="window.location.href='gameMenu.html'" type="button" class="btn btn-secondary">Go to Menu</button>
                 </p>
             </div>
             <div class="col-md-10">
@@ -29,14 +30,21 @@
 <div id="game-popup-id" class="game-popup">
     <div class="game-container">
             <h1 class="text-success">Congratulations!</h1>
-            <h3>Your score:</h3>
+            <h3 id="points-msg">Your score:</h3>
                     
             <button type="button" class="btn btn-outline-default btn-block" onclick="restartGame()">Replay</button>
-            <br>
             <button type="button" class="btn btn-outline-default">Go to next level</button>
             <button type="button" class="btn btn-outline-default" onclick="window.location.href='gameMenu.html'">Go to menu</button>
     </div>
 </div>
+
+<div id="option-popup-id" class="game-popup">
+        <div class="game-container">
+                <h1 class="text-success">Options</h1>
+                <h3 id="points-msg">Your score:</h3>
+                <button id="option-popup-close" type="button" class="btn btn-outline-primary">Close</button>
+        </div>
+    </div>
 
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.js"></script>

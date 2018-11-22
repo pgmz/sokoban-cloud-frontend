@@ -1,6 +1,9 @@
 const Http = new XMLHttpRequest();
 var blockSprite;
 var playerSprite;
+var environmentSprite;
+var crateSprite;
+var groundSprite;
 var structureOfBoard = {};
 var inx = 0;
 var offsetX = 0;
@@ -12,8 +15,6 @@ Sokoban.map = Sokoban.map || {};
 var authToken;
 
 $(function(){
-
-    noLoop();
 
     Sokoban.authToken.then(function setAuthToken(token) {
         if (token) {
@@ -31,8 +32,8 @@ $(function(){
             offsetX = Math.floor(15 - structureOfBoard.Size[0])/2;
             offsetY = Math.floor(9 - structureOfBoard.Size[1])/2;
             level = structureOfBoard.Name;
+            $(document.getElementById("level-title")).text(level);
             $(document.getElementById('movements-title')).text("Movements: " + JSON.parse(Http.responseText).Movements);
-            $(document.getElementById('points-title')).text("Points: " + JSON.parse(Http.responseText).Points);
             loop();
         }
 
@@ -43,6 +44,7 @@ $(function(){
 });
 
 function preload(){
+    noLoop();
     blockSprite = getBlockSprites();
     playerSprite = getPlayerSprites();
     environmentSprite = getEnvironmentSprites();
@@ -54,12 +56,18 @@ function setup() {
     //this is equal to 15*9
     var cnv = createCanvas(960, 576);
     cnv.parent('canvasContainer');
-    frameRate(12);
+    background(80);
 }
 
 function draw() {
-    background('#000000');
     if(structureOfBoard != null){
+        for(var posx = 0; posx < structureOfBoard.Size[0]; posx++){
+            for(var posy = 0; posy < structureOfBoard.Size[1]; posy++){
+                image(groundSprite[0],
+                    (offsetX + posx) * 64,
+                    (offsetY + posy) * 64);
+            }
+        }
 
         structureOfBoard.Limits.forEach(element => {
             image(blockSprite[element.Sprite],
@@ -79,10 +87,9 @@ function draw() {
                 (offsetY + element.PositionY) * 64);
         });
         
-        image(playerSprite[structureOfBoard.Player.Sprite][inx],
+        image(playerSprite[structureOfBoard.Player.Sprite][0],
             (offsetX + structureOfBoard.Player.PositionX) * 64, 
             (offsetY + structureOfBoard.Player.PositionY) * 64);
-        inx = (inx==2)?(0):(inx+1);
     }
 }
 
@@ -108,20 +115,24 @@ window.onkeyup = function(e) {
             structureOfBoard = JSON.parse(Http.responseText).Board;
             Game = JSON.parse(Http.responseText).Game;
             $(document.getElementById('movements-title')).text("Movements: " + JSON.parse(Http.responseText).Movements);
-            $(document.getElementById('points-title')).text("Points: " + JSON.parse(Http.responseText).Points);
             if(Game){
-                gameWon();
+                gameWon(structureOfBoard.Movement, JSON.parse(Http.responseText).Movements);
             }
         }
     }
 }
 
-function gameWon(){
+function gameWon(bestMovements, actualMovements){
+    var points = 50 - (actualMovements - bestMovements)*5;
+    //store in leaderboard
+    $(document.getElementById("points-msg")).text("Your score: " + points);
+    document.getElementById("restart-button").disabled = true;
+    document.getElementById("options-button").disabled = true;
+    document.getElementById("menu-button").disabled = true;
     Http.open("POST", window._config.api.invokeBoardUrl + "/clear");
     Http.setRequestHeader('Authorization', authToken);
     Http.send();
     Http.onreadystatechange=(e)=>{
-        console.log(Http.responseText);
         noLoop()
         document.getElementById("game-popup-id").style.display = "block";
     }
