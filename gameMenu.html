@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+<meta charset="UTF-8"/>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <title>Sokoban</title>
 </head>
 <body>
 
 <h1 id="mainTitle">Game menu</h1>
-
-<button id="continue_button" onclick="continueGame()" style="display:none">Continue with last game</button>
-<button onclick="createGame('level1')">Go to Level 1</button>
-<button onclick="createGame('level2')">Go to Level 2</button>
+<div class="container">
+        <button type="button" id="continue_button" onclick="continueGame()" style="display:none">Continue with last game</button>
+        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level1')">Go to Level 1</button>
+        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level2')">Go to Level 2</button>        
+</div>
 
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.js"></script>
 <script src="js/vendor/jquery-3.1.0.js"></script>
 <script src="js/vendor/bootstrap.min.js"></script>
 <script src="js/vendor/aws-cognito-sdk.min.js"></script>

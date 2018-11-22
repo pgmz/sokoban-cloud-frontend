@@ -2,90 +2,110 @@
 <html>
 <head>
 <meta charset="UTF-8"/>
-<link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <title>Sokoban</title>
 </head>
 <body>
 
-<h1 id="mainTitle" class="page-title">Welcome to Sokoban!</h1>
-<br>
-
-<table class="main-table" align="center">
-    <tr>
-        <th colspan="2">
-            <div>
+    <h1 id="mainTitle" class="page-title">Welcome to Sokoban!</h1>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
                 <h2 align="center">About sokoban</h2>
                 <p style="font-weight: normal">
                     <b>Sokoban</b>
-                        <span style="font-weight: normal">
-                            &#32;(
-                                <span lang="ja">倉庫番
-
-                                </span>
-                                <span style="display:none">,
-                                </span>&#32;<i>sōko-ban</i>, "warehouse keeper")
-                        </span>
+                    <span style="font-weight: normal">
+                        &#32;(
+                            <span lang="ja">倉庫
+                            </span>
+                            <span style="display:none">,
+                            </span>&#32;<i>sōko-ban</i>, "warehouse keeper")
+                    </span>
                      is a type of puzzle video game,<br>
                     in which the player pushes boxes or crates around in a warehouse,<br>
                     trying to get them to storage locations.<br>
-
+                
                     Sokoban was created in 1981 by Hiroyuki Imabayashi,<br>
                     and published in December 1982 by Thinking Rabbit,<br>
                     a software house based in Takarazuka, Japan.
                 </p>
             </div>
-        </th>
-    </tr>
-    <tr>
-        <td height="200">
-            <div>
+        </div>
+    </div>
+         
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
                 <h4>
                     I already have an account!
                 </h4>
 
                 <section>
-                    <h1 id="mainTitle" class="page-title">Sign In</h1>
+                    <div class="container">
+                    <h1>Sign In</h1>
                     <form id="signinForm">
-                      <input type="email" id="emailInputSignin" placeholder="Email" required>
-                      <br>
-                      <input type="password" id="passwordInputSignin" placeholder="Password" pattern=".*" required>
-                        <br>
-                      <input type="submit" value="Sign in">
+                        <div class="form-group row">
+                            <label class="control-label col-md-4" for="email">Email address:</label>
+                            <div class="col-md-8">
+                                <input  class="form-control" type="email" id="emailInputSignin" placeholder="Email" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="control-label col-md-4" for="password">Password:</label>
+                            <div class="col-md-8">
+                                <input class="form-control" type="password" id="passwordInputSignin" placeholder="Password" pattern=".*" required>
+                            </div>
+                        </div>
+                        <div class="form-group">        
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <input class="btn btn-default" type="submit" value="Sign in">
+                            </div>
+                        </div>
                     </form>
+                    </div>
                 </section>
-
             </div>
-        </td>
-        <td height="200">
-            <div>
+       
+            <div class="col-md-6"> 
                 <h4>
                     I don't have an account yet :(
                 </h4>
                 
-                <section class="form-wrap">
+                <section>
+                    <div class="container">
                     <h1>Register</h1>
                     <form id="registrationForm">
-                      <input type="email" id="emailInputRegister" placeholder="Email" pattern=".*" required>
-                      <br>
-                      <input type="password" id="passwordInputRegister" placeholder="Password" pattern=".*" required>
-                      <br>
-                      <input type="password" id="password2InputRegister" placeholder="Confirm Password" pattern=".*" required>
-                        <br>
-                      <input type="submit" value="Register">
+                        <div class="form-group row">
+                            <label class="control-label col-md-4" for="email">Email:</label>
+                            <div class="col-md-8">
+                                    <input class="form-control" type="email" id="emailInputRegister" placeholder="Email" pattern=".*" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                                <label class="control-label col-md-4" for="password">Password:</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="password" id="passwordInputRegister" placeholder="Password" pattern=".*" required>
+                                </div>
+                        </div>
+                        <div class="form-group row">
+                                <label class="control-label col-md-4" for="password">Confirm Password:</label>
+                                <div class="col-md-8">
+                                    <input class="form-control" type="password" id="password2InputRegister" placeholder="Confirm Password" pattern=".*" required>
+                                </div>
+                        </div>
+                        <div class="form-group">        
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <input class="btn btn-default" type="submit" value="Register">
+                            </div>
+                        </div>
+
                     </form>
+                    </div>
                 </section>
-
             </div>
-        </td>
-    </tr>
-
-</table>
-
-<div>
-    
-    
-</div>
+        </div>
+    </div>
 
 <!-- May include more stuff -->
 </body>
@@ -95,5 +115,5 @@
 <script src="js/vendor/amazon-cognito-identity.min.js"></script>
 <script src="js/config.js"></script>
 <script src="js/cognito-auth.js"></script>
-<script src="js/index.js"></script>
+<!--<script src="js/index.js"></script>-->
 </html> 
