@@ -19,7 +19,7 @@ $(function(){
         if (token) {
             authToken = token;
         } else {
-            window.location.href = '/signin.html';
+            window.location.href = 'signin.html';
         }
 
         Http.open("GET", window._config.api.invokeBoardUrl + "/start");
@@ -38,7 +38,7 @@ $(function(){
 
     }).catch(function handleTokenError(error) {
         alert(error);
-        window.location.href = '/signin.html';
+        window.location.href = 'signin.html';
     });
 });
 
@@ -107,14 +107,23 @@ window.onkeyup = function(e) {
         Http.onreadystatechange=(e)=>{
             structureOfBoard = JSON.parse(Http.responseText).Board;
             Game = JSON.parse(Http.responseText).Game;
-            if(Game){
-                $(document.getElementById('mainTitle')).text("Ah perro, ya ganaste");
-            } else {
-                $(document.getElementById('mainTitle')).text("Ah perro");
-            }
             $(document.getElementById('movements-title')).text("Movements: " + JSON.parse(Http.responseText).Movements);
             $(document.getElementById('points-title')).text("Points: " + JSON.parse(Http.responseText).Points);
+            if(Game){
+                gameWon();
+            }
         }
+    }
+}
+
+function gameWon(){
+    Http.open("POST", window._config.api.invokeBoardUrl + "/clear");
+    Http.setRequestHeader('Authorization', authToken);
+    Http.send();
+    Http.onreadystatechange=(e)=>{
+        console.log(Http.responseText);
+        noLoop()
+        document.getElementById("game-popup-id").style.display = "block";
     }
 }
 

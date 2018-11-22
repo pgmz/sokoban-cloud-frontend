@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
 <title>Sokoban</title>
 </head>
 <body>
 
-<h1 align="center">Sokoban</h1>
+<h1 align="center" id="mainTitle">Sokoban</h1>
 <table>
     <tr>
         <td width="20%">
@@ -23,6 +24,18 @@
         </td>
     </tr>
 </table>
+
+<div id="game-popup-id" class="game-popup">
+    <div class="game-container">
+            <h1>Congratulations!</h1>
+            <h3>Your score:</h3>
+                    
+            <button type="button" class="btn" onclick="restartGame()">Replay</button>
+            <br>
+            <button type="button" class="btn">Go to next level</button>
+            <button type="button" class="btn cancel" onclick="window.location.href='gameMenu.html'">Go to menu</button>
+    </div>
+</div>
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

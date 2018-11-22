@@ -22,3 +22,38 @@
 th, td{
     border: 1px solid black;
 }
+
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+/* The popup form - hidden by default */
+.game-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  margin: 20px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.game-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 200px;
+  padding: 10px;
+  margin: 20px;
+  background-color: white;
+}
+
+.game-container h1 h3{
+    align-content: center;
+}
+
+/* Add some hover effects to buttons */
+.game-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
