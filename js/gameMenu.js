@@ -55,4 +55,10 @@ function createGame(level){
         alert(error);
         window.location.href = 'signin.html';
     });
+
+}
+
+function signOut(){
+    Sokoban.signOut();
+    window.location.href = 'signin.html';  
 }

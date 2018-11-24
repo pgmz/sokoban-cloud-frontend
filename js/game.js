@@ -9,6 +9,7 @@ var inx = 0;
 var offsetX = 0;
 var offsetY = 0;
 var level;
+var levelId;
 
 var Sokoban = window.Sokoban || {};
 Sokoban.map = Sokoban.map || {};
@@ -32,6 +33,7 @@ $(function(){
             offsetX = Math.floor(15 - structureOfBoard.Size[0])/2;
             offsetY = Math.floor(9 - structureOfBoard.Size[1])/2;
             level = structureOfBoard.Name;
+            levelId = structureOfBoard.Id;
             $(document.getElementById("level-title")).text(level);
             $(document.getElementById('movements-title')).text("Movements: " + JSON.parse(Http.responseText).Movements);
             loop();
@@ -107,7 +109,8 @@ window.onkeyup = function(e) {
     }
     
     if(action != null){
-        Http.open("GET", window._config.api.invokeGameUrl + "/move/" + action);
+        Http.open("GET", window._config.api.invokeBoardUrl + "/move/" + action);
+        //Http.open("GET", window._config.api.invokeGameUrl + "/move/" + action);
         Http.setRequestHeader('Authorization',authToken);
         Http.send();
     
@@ -146,7 +149,7 @@ function restartGame(){
             window.location.href = 'signin.html';
         }
 
-        Http.open("GET", window._config.api.invokeBoardUrl + "/start/new/" + level);
+        Http.open("GET", window._config.api.invokeBoardUrl + "/start/new/" + levelId);
         Http.setRequestHeader('Authorization',authToken);
         Http.send();
     

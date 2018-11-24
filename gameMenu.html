@@ -7,11 +7,52 @@
 </head>
 <body>
 
+<button type="button" class="btn btn-primary btn-lg" id="continue_button" onclick="continueGame()" style="display:none">Continue with last game</button>
+
 <h1 id="mainTitle">Game menu</h1>
+<br>
 <div class="container">
-        <button type="button" class="btn btn-primary btn-lg" id="continue_button" onclick="continueGame()" style="display:none">Continue with last game</button>
-        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level1')">Go to Level 1</button>
-        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level2')">Go to Level 2</button>        
+        <div class="row">
+                <div class="col-md-4">
+                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level1')">Go to Level 1</button>
+                </div>
+                <div class="col-md-4">
+                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level2')">Go to Level 2</button>   
+                </div>
+                <div class="col-md-4">
+                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level2')">Go to Level 3</button>   
+                </div>
+        </div>       
+        <div class="row">
+                <div class="col-md-4">
+                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level1')">Go to Level 4</button>
+                </div>
+                <div class="col-md-4">
+                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level2')">Go to Level 5</button>   
+                </div>
+                <div class="col-md-4">
+                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level2')">Go to Level 6</button>   
+                </div>
+        </div>     
+        <div class="row">
+                <div class="col-md-4">
+                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level1')">Go to Level 7</button>
+                </div>
+                <div class="col-md-4">
+                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level2')">Go to Level 8</button>   
+                </div>
+                <div class="col-md-4">
+                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level2')">Go to Level 9</button>   
+                </div>
+        </div>     
+        <div class="row">
+                <div class="col-md-6">
+                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level2')">Go to Level 9</button>   
+                </div>
+                <div class="col-md-6">
+                        <button type="button" class="btn btn-dark btn-lg" onclick="signOut()">Log out</button>   
+                </div>
+        </div>
 </div>
 
 </body>
