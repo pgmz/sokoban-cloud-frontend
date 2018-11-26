@@ -137,8 +137,10 @@ function gameWon(bestMovements, actualMovements){
     Http.send();
     Http.onreadystatechange=(e)=>{
         noLoop()
+        storeScore(points, levelId);
         document.getElementById("game-popup-id").style.display = "block";
     }
+    
 }
 
 function restartGame(){
@@ -161,4 +163,14 @@ function restartGame(){
         alert(error);
         window.location.href = 'signin.html';
     });
+}
+
+function storeScore(score, level){
+    if(score != null){
+        Http.open("POST", window._config.api.invokeBoardUrl + "/score");
+        Http.setRequestHeader('Authorization',authToken);
+        Http.setRequestHeader("Content-Type", "application/json");
+        Http.send(JSON.stringify({Score:score,
+            Level:level}));
+    }
 }
