@@ -1,4 +1,6 @@
 const Http = new XMLHttpRequest();
+const canvasWidth = 640;
+const canvasHeight = 512;
 var blockSprite;
 var playerSprite;
 var environmentSprite;
@@ -10,6 +12,7 @@ var offsetX = 0;
 var offsetY = 0;
 var level;
 var levelId;
+var scoreValue;
 
 var Sokoban = window.Sokoban || {};
 Sokoban.map = Sokoban.map || {};
@@ -30,13 +33,14 @@ $(function(){
     
         Http.onreadystatechange=(e)=>{
             structureOfBoard = JSON.parse(Http.responseText).Board;
-            offsetX = Math.floor(15 - structureOfBoard.Size[0])/2;
-            offsetY = Math.floor(9 - structureOfBoard.Size[1])/2;
+            offsetX = Math.floor(10 - structureOfBoard.Size[0])/2;
+            offsetY = Math.floor(8 - structureOfBoard.Size[1])/2;
             level = structureOfBoard.Name;
             levelId = structureOfBoard.Id;
             $(document.getElementById("level-title")).text(level);
             $(document.getElementById('movements-title')).text("Movements: " + JSON.parse(Http.responseText).Movements);
-            loop();
+
+            getScore();
         }
 
     }).catch(function handleTokenError(error) {
@@ -44,6 +48,22 @@ $(function(){
         window.location.href = 'signin.html';
     });
 });
+
+function getScore(){
+    Http.open("GET", window._config.api.invokeBoardUrl + "/score/" + levelId);
+    Http.setRequestHeader('Authorization',authToken);
+    Http.send();
+
+    Http.onreadystatechange=(e)=>{
+        scoreValue = JSON.parse(JSON.parse(Http.responseText).Item.value);
+        
+        if(JSON.parse(Http.responseText).Item != null){
+            $(document.getElementById('score-title')).text("Your record: " + scoreValue.Score);
+        }
+
+        loop();
+    }
+}
 
 function preload(){
     noLoop();
@@ -55,8 +75,8 @@ function preload(){
 }
 
 function setup() {
-    //this is equal to 15*9
-    var cnv = createCanvas(960, 576);
+    //this is equal to 10*9
+    var cnv = createCanvas(canvasWidth, canvasHeight);
     cnv.parent('canvasContainer');
     background(80);
 }
@@ -137,7 +157,7 @@ function gameWon(bestMovements, actualMovements){
     Http.send();
     Http.onreadystatechange=(e)=>{
         noLoop()
-        storeScore(points, levelId);
+        storeScore(points, levelId, actualMovements);
         document.getElementById("game-popup-id").style.display = "block";
     }
     
@@ -165,12 +185,16 @@ function restartGame(){
     });
 }
 
-function storeScore(score, level){
-    if(score != null){
+function storeScore(score, level, movements){
+    if(score != null && score > scoreValue.Score){
         Http.open("POST", window._config.api.invokeBoardUrl + "/score");
         Http.setRequestHeader('Authorization',authToken);
         Http.setRequestHeader("Content-Type", "application/json");
-        Http.send(JSON.stringify({Score:score,
-            Level:level}));
+        Http.send(JSON.stringify(
+            {Score:score,
+            Level:level,
+            Movements:movements,
+            Timestamp:Math.round((new Date()).getTime() / 1000)
+        }));
     }
 }
