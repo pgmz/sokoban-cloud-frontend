@@ -32,15 +32,19 @@ $(function(){
         Http.send();
     
         Http.onreadystatechange=(e)=>{
-            structureOfBoard = JSON.parse(Http.responseText).Board;
-            offsetX = Math.floor(10 - structureOfBoard.Size[0])/2;
-            offsetY = Math.floor(8 - structureOfBoard.Size[1])/2;
-            level = structureOfBoard.Name;
-            levelId = structureOfBoard.Id;
-            $(document.getElementById("level-title")).text(level);
-            $(document.getElementById('movements-title')).text("Movements: " + JSON.parse(Http.responseText).Movements);
+            
+            if(Http.readyState === XMLHttpRequest.DONE && Http.status === 200) {
 
-            getScore();
+                structureOfBoard = JSON.parse(Http.responseText).Board;
+                offsetX = Math.floor(10 - structureOfBoard.Size[0])/2;
+                offsetY = Math.floor(8 - structureOfBoard.Size[1])/2;
+                level = structureOfBoard.Name;
+                levelId = structureOfBoard.Id;
+                $(document.getElementById("level-title")).text(level);
+                $(document.getElementById('movements-title')).text("Movements: " + JSON.parse(Http.responseText).Movements);
+
+                getScore();
+            }
         }
 
     }).catch(function handleTokenError(error) {
@@ -55,13 +59,16 @@ function getScore(){
     Http.send();
 
     Http.onreadystatechange=(e)=>{
-        scoreValue = JSON.parse(JSON.parse(Http.responseText).Item.value);
-        
-        if(JSON.parse(Http.responseText).Item != null){
-            $(document.getElementById('score-title')).text("Your record: " + scoreValue.Score);
-        }
+        if(Http.readyState === XMLHttpRequest.DONE && Http.status === 200) {
 
-        loop();
+            scoreValue = JSON.parse(JSON.parse(Http.responseText).Item.value);
+        
+            if(JSON.parse(Http.responseText).Item != null){
+                $(document.getElementById('score-title')).text("Your record: " + scoreValue.Score);
+            }
+
+            loop();
+        }
     }
 }
 
@@ -135,11 +142,13 @@ window.onkeyup = function(e) {
         Http.send();
     
         Http.onreadystatechange=(e)=>{
-            structureOfBoard = JSON.parse(Http.responseText).Board;
-            Game = JSON.parse(Http.responseText).Game;
-            $(document.getElementById('movements-title')).text("Movements: " + JSON.parse(Http.responseText).Movements);
-            if(Game){
-                gameWon(structureOfBoard.Movement, JSON.parse(Http.responseText).Movements);
+            if(Http.readyState === XMLHttpRequest.DONE && Http.status === 200) {
+                structureOfBoard = JSON.parse(Http.responseText).Board;
+                Game = JSON.parse(Http.responseText).Game;
+                $(document.getElementById('movements-title')).text("Movements: " + JSON.parse(Http.responseText).Movements);
+                if(Game){
+                    gameWon(structureOfBoard.Movement, JSON.parse(Http.responseText).Movements);
+                }
             }
         }
     }
@@ -150,15 +159,17 @@ function gameWon(bestMovements, actualMovements){
     //store in leaderboard
     $(document.getElementById("points-msg")).text("Your score: " + points);
     document.getElementById("restart-button").disabled = true;
-    document.getElementById("options-button").disabled = true;
+    //document.getElementById("options-button").disabled = true;
     document.getElementById("menu-button").disabled = true;
     Http.open("POST", window._config.api.invokeBoardUrl + "/clear");
     Http.setRequestHeader('Authorization', authToken);
     Http.send();
     Http.onreadystatechange=(e)=>{
-        noLoop()
-        storeScore(points, levelId, actualMovements);
-        document.getElementById("game-popup-id").style.display = "block";
+        if(Http.readyState === XMLHttpRequest.DONE && Http.status === 200) {
+            noLoop()
+            storeScore(points, levelId, actualMovements);
+            document.getElementById("game-popup-id").style.display = "block";
+        }
     }
     
 }
@@ -176,7 +187,9 @@ function restartGame(){
         Http.send();
     
         Http.onreadystatechange=(e)=>{
-            window.location.href = "game.html";
+            if(Http.readyState === XMLHttpRequest.DONE && Http.status === 200) {
+                window.location.href = "game.html";
+            }
         }
 
     }).catch(function handleTokenError(error) {

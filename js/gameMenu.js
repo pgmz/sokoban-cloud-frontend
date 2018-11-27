@@ -17,9 +17,11 @@ $(function(){
         Http.send();
     
         Http.onreadystatechange=(e)=>{
-            structureOfBoard = JSON.parse(Http.responseText).Board;
-            if(structureOfBoard != null){
-                document.getElementById('continue_button').style.display = "initial";
+            if(Http.readyState === XMLHttpRequest.DONE && Http.status === 200) {
+                structureOfBoard = JSON.parse(Http.responseText).Board;
+                if(structureOfBoard != null){
+                    document.getElementById('continue_button').style.display = "initial";
+                }
             }
         }
 
@@ -48,7 +50,9 @@ function createGame(level){
         Http.send();
     
         Http.onreadystatechange=(e)=>{
-            window.location.href = "game.html";
+            if(Http.readyState === XMLHttpRequest.DONE && Http.status === 200) {
+                window.location.href = "game.html";
+            }
         }
 
     }).catch(function handleTokenError(error) {

@@ -8,51 +8,52 @@
 </head>
 <body>
 
-<button type="button" class="btn btn-primary btn-lg" id="continue_button" onclick="continueGame()" style="display:none">Continue with last game</button>
 
-<h1 id="mainTitle">Game menu</h1>
-<br>
-<div class="container">
+<div class="container" align="center">
+
         <div class="row">
-                <div class="col-md-4">
-                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level1')">Go to Level 1</button>
-                </div>
-                <div class="col-md-4">
-                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level2')">Go to Level 2</button>   
-                </div>
-                <div class="col-md-4">
-                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level2')">Go to Level 3</button>   
-                </div>
-        </div>       
+                <h1 id="mainTitle">Game menu</h1>
+        </div>
+        <br>
         <div class="row">
-                <div class="col-md-4">
-                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level1')">Go to Level 4</button>
-                </div>
-                <div class="col-md-4">
-                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level2')">Go to Level 5</button>   
-                </div>
-                <div class="col-md-4">
-                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level2')">Go to Level 6</button>   
-                </div>
-        </div>     
+                <button type="button" class="btn btn-primary btn-lg" id="continue_button" onclick="continueGame()" style="display:none">Continue with last game</button>
+        </div>
+        <br>
         <div class="row">
-                <div class="col-md-4">
-                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level1')">Go to Level 7</button>
+                <div class="btn-group" role="group" aria-label="Button group 1">
+                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level1')">Level 1</button>
+                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level2')">Level 2</button>   
+                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level3')">Level 3</button>  
                 </div>
-                <div class="col-md-4">
-                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level2')">Go to Level 8</button>   
-                </div>
-                <div class="col-md-4">
-                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level2')">Go to Level 9</button>   
-                </div>
-        </div>     
+        </div>
         <div class="row">
-                <div class="col-md-6">
+                <div class="btn-group" role="group" aria-label="Button group 2">
+                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level4')">Level 4</button>
+                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level5')">Level 5</button>   
+                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level6')">Level 6</button>  
+                </div>
+        </div>
+        <div class="row">
+                <div class="btn-group" role="group" aria-label="Button group 3">
+                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level7')">Level 7</button>
+                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level8')">Level 8</button>   
+                        <button type="button" class="btn btn-dark btn-lg" onclick="createGame('level9')">Level 9</button>  
+                </div>
+        </div>  
+        <br>
+        <div class="row">
+                <div class="btn-group" role="group" aria-label="Button group 4">
+
+                        <button type="button" class="btn btn-dark btn-lg" onclick="window.location.href='scores.html'">
+                                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                                My Scores</button>  
+
+                        <!--
                         <button type="button" class="btn btn-dark btn-lg" onclick="window.location.href='leaderboard.html'">
                                 <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                                 Leaderboard</button>   
-                </div>
-                <div class="col-md-6">
+                        -->
+
                         <button type="button" class="btn btn-dark btn-lg" onclick="signOut()">
                                 <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
                                 Log out
